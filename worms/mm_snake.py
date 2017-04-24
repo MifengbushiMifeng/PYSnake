@@ -2,7 +2,7 @@
 import requests
 from lxml import html
 
-
+#http://blog.csdn.net/sinat_29508201/article/details/51152556
 def get_page_number(num):
     # 构建函数，用来查找该页内所有图片集的详细地址。目前一页包含15组套图，所以应该返回包含15个链接的序列。
     url = 'http://www.mmjpg.com/home/' + str(num)
@@ -13,10 +13,20 @@ def get_page_number(num):
     # 使用lxml.html模块构建选择器，主要功能是将二进制的服务器相应内容response转化为可读取的元素树（element tree）。lxml中就有etree模块，是构建元素树用的。如果是将html字符串转化为可读取的元素树，就建议使用lxml.html.fromstring，毕竟这几个名字应该能大致说明功能了吧。
     urls = []
     # 准备容器
-    for i in selector.xpath("//ul/li/a/@href"):
-        # 利用xpath定位到所有的套图的详细地址
-        urls.append(i)
+    # for i in selector.xpath("//ul/li/a/@href"):
+    #     # 利用xpath定位到所有的套图的详细地址
+    #     urls.append(i)
     # 遍历所有地址，添加到容器中
+    urls.append('http://www.mmjpg.com/mm/963')
+    urls.append('http://www.mmjpg.com/mm/920')
+    urls.append('http://www.mmjpg.com/mm/876')
+    urls.append('http://www.mmjpg.com/mm/864')
+    urls.append('http://www.mmjpg.com/mm/857')
+    urls.append('http://www.mmjpg.com/mm/837')
+    urls.append('http://www.mmjpg.com/mm/824')
+    urls.append('http://www.mmjpg.com/mm/670')
+    urls.append('http://www.mmjpg.com/mm/564')
+
     return urls
     # 将序列作为函数结果返回
 
@@ -65,6 +75,8 @@ def download_image(image_title, image_detail_websites):
     for i in image_detail_websites:
         filename = '%s%s.jpg' % (image_title, num)
         # print('正在下载图片：%s第%s/%s张，' % (image_title, num, amount))
+        print('正在下载图片：第%s/%s张，' % (num, amount))
+
         with open(filename, 'wb') as f:
             f.write(requests.get(i).content)
         num += 1
